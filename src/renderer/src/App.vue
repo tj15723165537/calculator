@@ -22,8 +22,26 @@ const enter = (keyName) => {
     case '←':
       del()
       break;
+    case 'C':
+      reset()
+      break;
+    case 'x²':
+      square()
+      break;
+    case '±':
+      negative()
+      break;
     case '＋':
       add(keyName)
+      break;
+    case '－':
+      reduce(keyName)
+      break;
+    case '×':
+      multiply(keyName)
+      break;
+    case '÷':
+      divide(keyName)
       break;
     case '＝':
       count()
@@ -35,25 +53,85 @@ const enter = (keyName) => {
       }
   }
 }
+//删除
 const del = () => {
   result.value = result.value.slice(0, -1)
   if (result.value === '') {
     result.value = '0'
   }
 }
+//重置
+const reset = () => {
+  result.value = '0'
+  currentMethod = undefined
+}
+// 加法
 const add = (keyName) => {
-  currentMethod = 'add'
+  if (currentMethod) count()
+  currentMethod = '＋'
   result.value = result.value + keyName
 }
-const count = () => {
-  let total = 0
-  switch (currentMethod) {
-    case 'add':
-      result.value.split('＋').forEach(item => {
-        total += Number(item)
-      })
-    result.value = total
+// 减法
+const reduce = (keyName) => {
+  if (currentMethod) count()
+  currentMethod = '－'
+  result.value = result.value + keyName
+}
+//乘法
+const multiply = (keyName) => {
+  if (currentMethod) count()
+  currentMethod = '×'
+  result.value = result.value + keyName
+}
+//除法
+const divide = (keyName) => {
+  if (currentMethod) count()
+  currentMethod = '÷'
+  result.value = result.value + keyName
+}
+//乘方
+const square = () => {
+  result.value = Number(result.value) * Number(result.value)
+}
+// 负数vds
+const negative = () => {
+  let data = result.value
+  if (currentMethod) {
+    let [before, after] = data.split(currentMethod)
+    if (after.startsWith('-')) {
+      after = after.slice(1)
+    } else {
+      after = after.padStart(after.length + 1, '-')
+    }
+    result.value = before + currentMethod + after
+  } else {
+    if (data.startsWith('-')) {
+      result.value = data.slice(1)
+    } else {
+      result.value = data.padStart(data.length + 1, '-')
+    }
   }
+}
+const count = () => {
+  switch (currentMethod) {
+    case '＋':
+      const [a, b] = result.value.split('＋')
+      result.value = String(Number(a) + Number(b))
+      break;
+    case '－':
+      const [c, d] = result.value.split('－')
+      result.value = String(Number(c) - Number(d))
+      break;
+    case '×':
+      const [e, f] = result.value.split('×')
+      result.value = String(Number(e) * Number(f))
+      break;
+    case '÷':
+      const [g, h] = result.value.split('÷')
+      result.value = String(Number(g) / Number(h))
+      break;
+  }
+  currentMethod = undefined
 }
 </script>
 <style lang="less">
