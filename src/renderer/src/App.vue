@@ -1,7 +1,7 @@
 <template>
   <div class="calculator">
     <div class="top">
-      <input v-model="result"/>
+      <input v-model="result" readonly/>
     </div>
     <div class="main">
       <div class="key" v-for="item in keys" :key="item" @click="enter(item)">
@@ -12,7 +12,6 @@
 </template>
 <script setup lang="ts">
 import {ref} from 'vue'
-
 const result = ref<string>('0')
 const keys = ref<string[]>(['←', 'C', 'x²', '÷', '7', '8',
   '9', '×', '4', '5', '6', '－', '1', '2', '3', '＋', '±', '0', '.', '＝'])
