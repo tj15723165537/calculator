@@ -12,10 +12,10 @@
 </template>
 <script setup lang="ts">
 import {ref} from 'vue'
-const result = ref<string>('0')
+const result = ref<any>('0')
 const keys = ref<string[]>(['←', 'C', 'x²', '÷', '7', '8',
   '9', '×', '4', '5', '6', '－', '1', '2', '3', '＋', '±', '0', '.', '＝'])
-let currentMethod = undefined
+let currentMethod:any = undefined
 const enter = (keyName) => {
   switch (keyName) {
     case '←':
@@ -112,6 +112,7 @@ const negative = () => {
   }
 }
 const count = () => {
+  console.log(process.env.NODE_ENV)
   switch (currentMethod) {
     case '＋':
       const [a, b] = result.value.split('＋')
