@@ -6,14 +6,16 @@ function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 350,
-    height: 450,
+    height: 320,
     show: false,
     autoHideMenuBar: true,
     icon:join(__dirname,'../../resources/calculator.png'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
-    }
+    },
+    backgroundColor:'#fff',
+    resizable:false
   })
 
   mainWindow.on('ready-to-show', () => {
